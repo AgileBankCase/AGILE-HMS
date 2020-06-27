@@ -44,11 +44,11 @@ public class Login extends HttpServlet {
             		requestDispatcher.forward(req, resp);
         		}
         		else if(accountType.equals("pharma")) {
-        			RequestDispatcher requestDispatcher = req.getRequestDispatcher("pharma.html");
+        			RequestDispatcher requestDispatcher = req.getRequestDispatcher("pharma.jsp");
             		requestDispatcher.forward(req, resp);
         		}
         		else if(accountType.equals("diagno")) {
-        			RequestDispatcher requestDispatcher = req.getRequestDispatcher("diagno.html");
+        			RequestDispatcher requestDispatcher = req.getRequestDispatcher("diagno.jsp");
             		requestDispatcher.forward(req, resp);
         		}
     		}
