@@ -3,6 +3,8 @@ package servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,31 +20,34 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
-import dao.CustomerSearchDAO;
 import dao.PatientDAO;
 import service.Validator;
 
-@WebServlet(name = "customer", urlPatterns = { "/customer" })
+@WebServlet(name = "patient", urlPatterns = { "/patient" })
 public class Patient extends HttpServlet {
 	static Logger logger = Logger.getLogger(Patient.class.getName());
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			String ssnid = req.getParameter("ssn-id");
-			String name = req.getParameter("cname");
+			String ssnIdStr = req.getParameter("ssnId");
+			String name = req.getParameter("name");
 			String ageStr = req.getParameter("age");
-			String addline1 = req.getParameter("addline1");
-			String addline2 = req.getParameter("addline2");
+			String address = req.getParameter("address");
 			String city = req.getParameter("city");
 			String state = req.getParameter("state");
-			if (ssnid.isEmpty() || name.isEmpty() || ageStr.isEmpty() || addline1.isEmpty() || addline2.isEmpty()
-					|| city.isEmpty() || state.isEmpty()) {
-				resp.getOutputStream().print("{\"status\":\"Please Enter Mandatory Fields\"}");
+			String bed=req.getParameter("bed");
+			String doaStr=req.getParameter("doa");
+			if (ssnIdStr.isEmpty() || name.isEmpty() || ageStr.isEmpty() || address.isEmpty() || bed.isEmpty()
+					|| city.isEmpty() || state.isEmpty() || doaStr.isEmpty()) {
+				resp.getOutputStream().print("{\"status\":\"Please Enter ALL Fields\"}");
 				return;
 			}
+			long ssnId=Long.parseLong(ssnIdStr);
 			int age = Integer.parseInt(ageStr);
-			int result = PatientDAO.registerCustomer(ssnid, name, age, addline1, addline2, city, state);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date doa=sdf.parse(doaStr);
+			int result = PatientDAO.createPatient(ssnId, name, age, address, city, state,bed,doa);
 			if (result > 0) {
 				resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
 				return;
@@ -55,7 +60,7 @@ public class Patient extends HttpServlet {
 	}
 
 	// doPut() //used for update customer
-
+/*
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			
@@ -107,4 +112,5 @@ public class Patient extends HttpServlet {
     	resp.getOutputStream().print(json.toString());
     	return;
     }
+    */
 }
