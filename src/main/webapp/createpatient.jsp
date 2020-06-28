@@ -30,6 +30,7 @@
 						<tr>
 							<td align='left'>Patient SSN Id</td>
 							<td><input name='ssnId' pattern="[0-9]{9}" required></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -37,6 +38,7 @@
 						<tr>
 							<td align='left'>Patient Name</td>
 							<td><input type='text' name='name' pattern="[A-Za-z]+" required></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -51,6 +53,7 @@
                         <tr>
 							<td align='left'>Date of Admission</td>
 							<td><input type="date" name="DOA"></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -70,7 +73,9 @@
                             </tr>
 						<tr>
 							<td align='left'>Address</td>
+
 							<td><input name='address'></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>

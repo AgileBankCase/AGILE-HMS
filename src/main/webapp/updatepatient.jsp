@@ -36,6 +36,7 @@
 							<td>&nbsp;</td>
 						</tr>
 						<tr>
+
 							<td align='left'>Patient ID</td>
 							<td><input id="Pid"  name='patId' pattern="[0-9]{9}" required></td>
 						</tr>
@@ -46,6 +47,7 @@
 						<tr>
 							<td align='left'>Patient Name</td>
 							<td><input id="uname" type='text' name='name' pattern="[A-Za-z]+" required></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -59,7 +61,9 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
+
 							<td><input id="udoj" type="date" name="doa"></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -80,6 +84,7 @@
 						<tr>
 							<td align='left'>Address</td>
 							<td><input name='address' id="uaddr"></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -185,6 +190,7 @@
 								$("#city").html(user["city"]);
 								$("#state").html(user["state"]);
 
+
 							});
 							$("#updatepatient").attr("class","");
 							$("#searchpatient").attr("class","hide");	
@@ -196,6 +202,7 @@
 				}
 			});
 		}
+
 </script>
 
 </html>

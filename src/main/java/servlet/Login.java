@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
     		
     		if(accountType.equals("mismatch")){
         		req.setAttribute("msg", "Username or Password not correct!");
-        		RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginscreen.jsp");
+        		RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
         		requestDispatcher.forward(req, resp);
         	}else if(Validator.isValidString(accountType)) {
     			HttpSession session=req.getSession();
@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
         		session.setAttribute("type", accountType);
         		
         		if(accountType.equals("desk")) {
-        			RequestDispatcher requestDispatcher = req.getRequestDispatcher("desk.jsp");
+        			RequestDispatcher requestDispatcher = req.getRequestDispatcher("createpatient.jsp");
             		requestDispatcher.forward(req, resp);
         		}
         		else if(accountType.equals("pharma")) {
@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
     		}
     	}else if(accountType.equals("false")){
     		req.setAttribute("msg", "Username or Password should not be empty!");
-    		RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginscreen.jsp");
+    		RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
     		requestDispatcher.forward(req, resp);
     		
     	}
@@ -79,7 +79,7 @@ public class Login extends HttpServlet {
     		}
     	}
     	else {
-    		RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginscreen.jsp");
+    		RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
     		requestDispatcher.forward(req, resp);
     	}
     	

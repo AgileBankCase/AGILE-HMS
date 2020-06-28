@@ -30,6 +30,7 @@
 						<tr>
 							<td align='left'>Patient SSN Id</td>
                             <td><input id="ssn-id" name='ssnId' pattern="[0-9]{9}" required></td>
+
                             <td><button onclick="get()">Get</button></td>
 						</tr>
 						<tr>
@@ -60,7 +61,9 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
+
 							<td><input id="doj" type="date" name="doa"></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -163,6 +166,7 @@
     }
     function get()
 {
+
     $.ajax(
 		{
 				method : "get",
@@ -195,6 +199,7 @@
 						}
 					}else
 					{
+
 						alert("No patient found with given ID !");
 					}
 				}
