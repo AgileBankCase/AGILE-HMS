@@ -55,12 +55,15 @@ public class DiagnosticDAO {
 					"	FROM public.diagnostic WHERE test_name=?;");  
 			stmt.setString(1,testName);
 			ResultSet rs=stmt.executeQuery();
+			rs.next();
+			JSONArray array=new JSONArray();
 			JSONObject record = new JSONObject();
 				   //Inserting key-value pairs into the json object
 				   record.put("test_ID", rs.getLong("test_ID"));
 				   record.put("test_name", rs.getString("test_name"));
 				   record.put("amount", rs.getDouble("amount"));
-			jsonObject.put("Diagnostic_Details", record);
+				   array.add(record);
+			jsonObject.put("Diagnostic_Details", array);
 			
 		}catch(Exception e) {
 			logger.log(Level.SEVERE,"Exception Occured",e);
