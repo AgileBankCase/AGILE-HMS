@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import dao.PatientDAO;
+import dao.MedicineDAO;
 import service.Validator;
 
 @WebServlet(name = "medicine", urlPatterns = { "/medicine" })
@@ -31,30 +31,39 @@ public class Medicine extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			String ssnIdStr = req.getParameter("ssnId");
-			String name = req.getParameter("name");
-			String ageStr = req.getParameter("age");
-			String address = req.getParameter("address");
-			String city = req.getParameter("city");
-			String state = req.getParameter("state");
-			String bed=req.getParameter("bed");
-			String doaStr=req.getParameter("doa");
-			if (!(Validator.isValidString(ssnIdStr) && Validator.isValidString(name) && Validator.isValidString(ageStr) && Validator.isValidString(address) && Validator.isValidString(bed)
-					&& Validator.isValidString(city) && Validator.isValidString(state) && Validator.isValidString(doaStr))) {
+			String patIdStr = req.getParameter("patId");
+			String medName = req.getParameter("medName");
+			String issueQuantityStr = req.getParameter("issueQuantity");
+			
+			if (!(Validator.isValidString(patIdStr) && Validator.isValidString(medName) && Validator.isValidString(issueQuantityStr))) {
 				resp.getOutputStream().print("{\"status\":\"Please Enter ALL Fields\"}");
 				return;
 			}
-			long ssnId=-1l;
-			if(Validator.isValidString(ssnIdStr)) {ssnId=Long.parseLong(ssnIdStr);}
-			Date doa=Date.valueOf(doaStr);
+			long patId=-1l;
+			int issueQuantity=-1;
+			if(Validator.isValidString(patIdStr)) {patId=Long.parseLong(patIdStr);}
+	
 
-			int age = Integer.parseInt(ageStr);
+			 issueQuantity = Integer.parseInt(issueQuantityStr);
+			 JSONObject json=MedicineDAO.getMedicine(medName);
+			 JSONArray patientMedicine=(JSONArray) json.get("Medicine_Details");
+			 
+ 				JSONObject record = (JSONObject) patientMedicine.get(0);
+ 				int availableQuantity= (Integer)record.get("quantity");
+ 				if(availableQuantity > issueQuantity) {
+ 					int setValue=availableQuantity-issueQuantity;
+ 					int result = MedicineDAO.issueMedicine(patId, medName, issueQuantity,setValue);
+ 					if (result > 0) {
+ 						resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
+ 						return;
+ 					}
+ 				}
+ 				else {
+ 					resp.getOutputStream().print("{\"status\":\"Quantity Not Available\"}");
+					return;
+ 				}
+ 				
 			
-			int result = PatientDAO.createPatient(ssnId, name, age, address, city, state,bed,doa);
-			if (result > 0) {
-				resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
-				return;
-			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception occured", e);
 		}
@@ -70,17 +79,17 @@ public class Medicine extends HttpServlet {
 		long patId=-1l;
     	if(Validator.isValidString(patIdStr)) {
     		patId=Long.parseLong(patIdStr);
-    		JSONObject json=PatientDAO.getIssuedMedicine(patId);
-    		if(((JSONArray)json.get("patient_details")).isEmpty()) {
+    		JSONObject json=MedicineDAO.getIssuedMedicine(patId);
+    		if(((JSONArray)json.get("Patient_Medicine_Details"))==null) {
         		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
         		return;
         	}
     		else {
-    			JSONArray patientMedicine = (JSONArray) json.get("patient_details");
+    			JSONArray patientMedicine = (JSONArray) json.get("Patient_Medicine_Details");
     			for(int i=0;i <  patientMedicine.size();i++)
     			{
     				JSONObject record = (JSONObject) patientMedicine.get(i);
-    				record.put("amount", ((Integer)record.get("issued_quantity"))*((Integer)record.get("rate")));
+    				record.put("amount", ((Integer)record.get("issued_quantity"))*((Double)record.get("rate")));
     			}
     			resp.getOutputStream().print(json.toString());
     	    	return;
@@ -88,8 +97,8 @@ public class Medicine extends HttpServlet {
     	}
     	else if(Validator.isValidString(medName)){
     		
-    		JSONObject json=PatientDAO.getMedicine(medName);
-	    	if(((JSONArray)json.get("patient_details")).isEmpty()) {
+    		JSONObject json=MedicineDAO.getMedicine(medName);
+	    	if(((JSONArray)json.get("Medicine_Details"))==null) {
 	    		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Medicine Name\"}");
 	    		return;
 	    	}
