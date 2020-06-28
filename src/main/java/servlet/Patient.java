@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import dao.PatientDAO;
@@ -38,8 +39,8 @@ public class Patient extends HttpServlet {
 			String state = req.getParameter("state");
 			String bed=req.getParameter("bed");
 			String doaStr=req.getParameter("doa");
-			if (ssnIdStr.isEmpty() || name.isEmpty() || ageStr.isEmpty() || address.isEmpty() || bed.isEmpty()
-					|| city.isEmpty() || state.isEmpty() || doaStr.isEmpty()) {
+			if (!(Validator.isValidString(ssnIdStr) && Validator.isValidString(name) && Validator.isValidString(ageStr) && Validator.isValidString(address) && Validator.isValidString(bed)
+					&& Validator.isValidString(city) && Validator.isValidString(state) && Validator.isValidString(doaStr))) {
 				resp.getOutputStream().print("{\"status\":\"Please Enter ALL Fields\"}");
 				return;
 			}
@@ -75,7 +76,11 @@ public class Patient extends HttpServlet {
 			String bed=req.getParameter("bed");
 			String doaStr=req.getParameter("doa"); 
 			long patId=-1l;
-
+			if (!(Validator.isValidString(patIdStr) && Validator.isValidString(name) && Validator.isValidString(ageStr) && Validator.isValidString(address) && Validator.isValidString(bed)
+					&& Validator.isValidString(city) && Validator.isValidString(state) && Validator.isValidString(doaStr))) {
+				resp.getOutputStream().print("{\"status\":\"Please Enter ALL Fields\"}");
+				return;
+			}
 			int age = Integer.parseInt(ageStr);
 			Date doa=Date.valueOf(doaStr);
 			if(Validator.isValidString(patIdStr)) {
@@ -126,6 +131,11 @@ public class Patient extends HttpServlet {
     		patId=Long.parseLong(patIdStr);
     	}
     	JSONObject json=PatientDAO.get(patId);
+    	if(((JSONArray)json.get("patient_details")).isEmpty()) {
+    		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
+    		return;
+    	}
+    	
     	resp.getOutputStream().print(json.toString());
     	return;
     }
