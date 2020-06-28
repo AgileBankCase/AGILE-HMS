@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,10 +35,9 @@ public class MedicineDAO {
 			while(rs.next()) {
 				   JSONObject record = new JSONObject();
 				   //Inserting key-value pairs into the json object
-				   record.put("patient_ID", rs.getLong("patient_ID"));
+				   record.put("medicine_name", rs.getString("medicine_name"));
 				   record.put("issued_quantity", rs.getInt("issued_quantity"));
 				   record.put("rate", rs.getDouble("rate"));
-				   record.put("Age", rs.getInt("Age"));
 				   array.add(record);
 				}
 			jsonObject.put("Patient_Medicine_Details", array);
@@ -53,18 +53,20 @@ public class MedicineDAO {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			Connection conn = DBUtil.getConnection();
-		
+		JSONArray array=new JSONArray();
 			PreparedStatement stmt=conn.prepareStatement("SELECT \"medicine_ID\", medicine_name, quantity, rate\r\n" + 
 					"	FROM public.medicine_table WHERE medicine_name=?;");  
 			stmt.setString(1,medicineName);
 			ResultSet rs=stmt.executeQuery();
 			JSONObject record = new JSONObject();
+					rs.next();
 				   //Inserting key-value pairs into the json object
 				   record.put("medicine_ID", rs.getLong("medicine_ID"));
 				   record.put("medicine_name", rs.getString("medicine_name"));
 				   record.put("quantity", rs.getInt("quantity"));
 				   record.put("rate", rs.getDouble("rate"));
-			jsonObject.put("Medicine_Details", record);
+				   array.add(record);
+			jsonObject.put("Medicine_Details",array);
 			
 		}catch(Exception e) {
 			logger.log(Level.SEVERE,"Exception Occured",e);
@@ -72,8 +74,9 @@ public class MedicineDAO {
 		return jsonObject;
 	}
 	
-	public static int issueMedicine(long patientId,String medicineName,int issuedQuantity) {
+	public static int issueMedicine(long patientId,String medicineName,int issuedQuantity,int setValue) {
 		int affectedRows = 0;
+		//int affectedRows2=0;
 		try {
 			Connection conn = DBUtil.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO public.patient_medicine_table(\r\n" + 
@@ -84,7 +87,12 @@ public class MedicineDAO {
 			stmt.setString(2, medicineName);
 			stmt.setInt(3, issuedQuantity);
 			affectedRows = stmt.executeUpdate();
-
+			PreparedStatement stmt2 = conn.prepareStatement("UPDATE public.medicine_table" + 
+					"	SET  quantity=?" + 
+					"	WHERE medicine_name=?;");
+			stmt2.setInt(1, setValue);
+			stmt2.setString(2, medicineName);
+			stmt2.executeUpdate();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception Occured", e);
 		}
