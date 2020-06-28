@@ -36,8 +36,18 @@
 							<td>&nbsp;</td>
 						</tr>
 						<tr>
+
+							<td align='left'>Patient ID</td>
+							<td><input id="Pid"  name='patId' pattern="[0-9]{9}" required></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>
+
+						<tr>
 							<td align='left'>Patient Name</td>
-							<td><input id="uname" type='text' name='cname' pattern="[A-Za-z]+" required></td>
+							<td><input id="uname" type='text' name='name' pattern="[A-Za-z]+" required></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -51,7 +61,9 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
-							<td><input id="udoj" type="date"></td>
+
+							<td><input id="udoj" type="date" name="doa"></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -71,7 +83,8 @@
                             </tr>
 						<tr>
 							<td align='left'>Address</td>
-							<td><input name='addline' id="uaddr"></td>
+							<td><input name='address' id="uaddr"></td>
+
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -151,38 +164,45 @@
     }
     function get()
 {
-    $.ajax({
-		method : "get",
+    $.ajax(
+		{
+				method : "get",
 				url : "/patient",
 				data : $('#search').serialize() + "&action=" + action,
-				success : function(data) {
+				success : function(data)
+				 {
 					var json = JSON.parse(data);
 					var patient_details=[];
-					patient_details["User_Details"];
-		if(patient_details.length!=0){
-						if(action=="update"){
-							userDetails.forEach(user => {
-								$("#ussnID").html(user["SSN ID"]);
-								$("#uname").html(user["name"]);
-								$("#uage").html(user["age"]);
-								$("#udoj").html(user["DOA"]);
-								$("#ubed").html(user["type_of_bed"]);
-								$("#uaddr").html(user["address"]);
-								$("#ucity").html(user["city"]);
-								$("#ustate").html(user["state"]);
+					patient_details=json["patient_details"];
+					if(patient_details.length!=0)
+					{
+						 if(action=="update")
+						 {
+							patient_details.forEach(user => 
+							{
+								$("#ssnID").html(user["SSN_ID"]);
+								$("#patID").html(user["pat_ID"]);
+								$("#name").html(user["name"]);
+								$("#age").html(user["age"]);
+								$("#doj").html(user["DOA"]);
+								$("#bed").html(user["type_of_bed"]);
+								$("#addr").html(user["address"]);
+								$("#city").html(user["city"]);
+								$("#state").html(user["state"]);
+
 
 							});
 							$("#updatepatient").attr("class","");
 							$("#searchpatient").attr("class","hide");	
-						}        
-						else{
+						}
+					}else
+					{
 						alert("No patient found with given ID !");
 					}
 				}
-			}
+			});
 		}
- });
-} 
+
 </script>
 
 </html>
