@@ -49,15 +49,15 @@ body{
    <script>
       function view()
       {
-    $.ajax(
-		{
+    $.ajax({
 				method : "get",
 				url : "/patient",
 				data : $('#search').serialize() + "&action=" + action,
-				success : function(data){
+				success : function(data)
+				{
 					var json = JSON.parse(data);
 					var patient_details=[];
-					patient_details=json["User_Details"];
+					patient_details=json["patient_details"];
 					if(patient_details.length!=0)
 					{
 						 if(action=="delete")
@@ -75,6 +75,8 @@ body{
 
 							});
 						}
+					}
+				}
           });
 
 		}

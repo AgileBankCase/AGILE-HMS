@@ -29,14 +29,14 @@
 						align='center'>
 						<tr>
 							<td align='left'>Patient SSN Id</td>
-							<td><input name='ssn-id' pattern="[0-9]{9}" required></td>
+							<td><input name='ssnId' pattern="[0-9]{9}" required></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 						</tr>
 						<tr>
 							<td align='left'>Patient Name</td>
-							<td><input type='text' name='cname' pattern="[A-Za-z]+" required></td>
+							<td><input type='text' name='name' pattern="[A-Za-z]+" required></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -50,14 +50,14 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
-							<td><input type="date"></td>
+							<td><input type="date" name="DOA"></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 						</tr>
 						<tr>
 							<td align='left'>Type of Bed</td>
-							<td><select name="bedtype">
+							<td><select name="bed">
 									<option>Select</option>
 									<option>General Ward</option>
 									<option>Semi sharing</option>
@@ -70,7 +70,7 @@
                             </tr>
 						<tr>
 							<td align='left'>Address</td>
-							<td><input name='addline'></td>
+							<td><input name='address'></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>

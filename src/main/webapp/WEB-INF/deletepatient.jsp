@@ -29,12 +29,21 @@
 						align='center'>
 						<tr>
 							<td align='left'>Patient SSN Id</td>
-                            <td><input id="ssn-id" name='ssn-id' pattern="[0-9]{9}" required></td>
+                            <td><input id="ssn-id" name='ssnId' pattern="[0-9]{9}" required></td>
                             <td><button onclick="get()">Get</button></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 						</tr>
+						<tr>
+							<td align='left'>Patient Id</td>
+                            <td><input id="pat-id" name='patId' pattern="[0-9]{9}" required></td>
+                            <td><button onclick="get()">Get</button></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>
+
 						<tr>
 							<td align='left'>Patient Name</td>
 							<td><input id="name" type='text' name='cname' pattern="[A-Za-z]+" required></td>
@@ -51,7 +60,7 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
-							<td><input id="doj" type="date"></td>
+							<td><input id="doj" type="date" name="doa"></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -154,18 +163,24 @@
     }
     function get()
 {
-    $.ajax({
+    $.ajax(
+		{
 				method : "get",
 				url : "/patient",
 				data : $('#search').serialize() + "&action=" + action,
-				success : function(data) {
+				success : function(data)
+				 {
 					var json = JSON.parse(data);
 					var patient_details=[];
 					patient_details=json["User_Details"];
-					if(patient_details.length!=0){
-						 if(action=="delete"){
-							patient_details.forEach(user => {
+					if(patient_details.length!=0)
+					{
+						 if(action=="delete")
+						 {
+							patient_details.forEach(user => 
+							{
 								$("#ssnID").html(user["SSN_ID"]);
+								$("#patID").html(user["pat_ID"]);
 								$("#name").html(user["name"]);
 								$("#age").html(user["age"]);
 								$("#doj").html(user["DOA"]);
@@ -178,7 +193,8 @@
 							$("#deletepatient").attr("class","");
 							$("#searchpatient").attr("class","hide");	
 						}
-					}else{
+					}else
+					{
 						alert("No patient found with given ID !");
 					}
 				}
