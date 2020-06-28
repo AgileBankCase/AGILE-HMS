@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ public class PatientDAO {
 
 	static Logger logger = Logger.getLogger(PatientDAO.class.getName());
 	
-	public static int createPatient(long SSN_ID,String name,int age,String address,String city,String state,String type_of_bed,String DOA ) {
+	public static int createPatient(long SSN_ID,String name,int age,String address,String city,String state,String type_of_bed,Date DOA ) {
 		int affectedRows = 0;
 		try {
 			Connection conn = DBUtil.getConnection();
@@ -25,7 +26,7 @@ public class PatientDAO {
 			stmt.setLong(1, SSN_ID);
 			stmt.setString(2, name);
 			stmt.setInt(3, age);
-			stmt.setString(4,DOA);
+			stmt.setDate(4,DOA);
 			stmt.setString(5, type_of_bed);
 			stmt.setString(6, address);
 			stmt.setString(7, city);
@@ -37,7 +38,7 @@ public class PatientDAO {
 		}
 		return affectedRows;
 	}
-	public static int updatePatient(long patientID,String name,int age,String address,String city,String state,String type_of_bed,String DOA ) {
+	public static int updatePatient(long patientID,String name,int age,String address,String city,String state,String type_of_bed,Date DOA ) {
 		int affectedRows = 0;
 		try {
 			Connection conn = DBUtil.getConnection();
@@ -47,7 +48,7 @@ public class PatientDAO {
 			
 			stmt.setString(1, name);
 			stmt.setInt(2, age);
-			stmt.setString(3,DOA);
+			stmt.setDate(3,DOA);
 			stmt.setString(4, type_of_bed);
 			stmt.setString(5, address);
 			stmt.setString(6, city);
@@ -68,14 +69,14 @@ public class PatientDAO {
 		int affectedRows = 0,index=0;
 		try {
 			Connection conn = DBUtil.getConnection();
-			
+			PreparedStatement  stmt;
 			if(patientID!=-1) {
-				PreparedStatement stmt=conn.prepareStatement("SELECT \"SSN_ID\", name, age, \"DOA\", \"DOD\", type_of_bed, address, city, state, status, no_of_days, \"patient_ID\"\r\n" + 
+				stmt=conn.prepareStatement("SELECT \"SSN_ID\", name, age, \"DOA\", \"DOD\", type_of_bed, address, city, state, status, no_of_days, \"patient_ID\"\r\n" + 
 						"	FROM public.patient_table WHERE \"patient_ID\"=?;");  
-				stmt.setLong(1,patient_ID); 
+				stmt.setLong(1,patientID); 
 				
 			}else {
-				PreparedStatement stmt=conn.prepareStatement("SELECT \"SSN_ID\", name, age, \"DOA\", \"DOD\", type_of_bed, address, city, state, status, no_of_days, \"patient_ID\"\r\n" + 
+				stmt=conn.prepareStatement("SELECT \"SSN_ID\", name, age, \"DOA\", \"DOD\", type_of_bed, address, city, state, status, no_of_days, \"patient_ID\"\r\n" + 
 						"	FROM public.patient_table WHERE status='active';");
 			}
 			ResultSet rs=stmt.executeQuery();
@@ -107,7 +108,7 @@ public class PatientDAO {
 		return jsonObject;
 	}
 
-	public static int deletePatient(long patientId) {
+	public static int deletePatient(long patientID) {
 		int affectedrows = 0;
 		try {
 			Connection conn = DBUtil.getConnection();
