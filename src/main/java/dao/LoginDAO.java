@@ -16,7 +16,7 @@ public class LoginDAO {
 	public static String checkCredentials(String username, String password){
 		try {
 			Connection conn = DBUtil.getConnection();
-			PreparedStatement stmt=conn.prepareStatement("SELECT * FROM login_table where \"UserName\"=? and \"Password\"=?;");  
+			PreparedStatement stmt=conn.prepareStatement("SELECT * FROM login_table where \"username\"=? and \"password\"=?;");  
 			stmt.setString(1,username);//1 specifies the first parameter in the query  
 			stmt.setString(2,password); 
 			ResultSet rs=stmt.executeQuery();  

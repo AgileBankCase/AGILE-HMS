@@ -21,8 +21,8 @@ public class PatientDAO {
 		try {
 			Connection conn = DBUtil.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO public.patient_table(\r\n" + 
-					"	\"SSN_ID\", name, age, \"DOA\", type_of_bed, address, city, state)\r\n" + 
-					"	VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+					"	\"SSN_ID\", name, age, \"DOA\", type_of_bed, address, city, state,status)\r\n" + 
+					"	VALUES (?, ?, ?, ?, ?, ?, ?, ?,'active');");
 			stmt.setLong(1, SSN_ID);
 			stmt.setString(2, name);
 			stmt.setInt(3, age);
@@ -90,7 +90,7 @@ public class PatientDAO {
 				   record.put("name", rs.getString("name"));
 				   record.put("age", rs.getInt("age"));
 				   record.put("DOA", rs.getDate("DOA").toString());
-				   record.put("DOD", rs.getDate("DOD").toString());
+				   
 				   record.put("type_of_bed", rs.getString("type_of_bed"));
 				   record.put("address", rs.getString("address"));
 				   record.put("city", rs.getString("city"));
