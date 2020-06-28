@@ -11,9 +11,9 @@ import org.json.simple.JSONObject;
 
 import service.DBUtil;
 
-public class AccountDAO {
+public class PatientDAO {
 
-	static Logger logger = Logger.getLogger(AccountDAO.class.getName());
+	static Logger logger = Logger.getLogger(PatientDAO.class.getName());
 	
 	public static int createPatient(long SSN_ID,String name,int age,String address,String city,String state,String type_of_bed,String DOA ) {
 		int affectedRows = 0;
