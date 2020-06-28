@@ -76,7 +76,7 @@ li.dropdown {
             <a href="/searchpatient.jsp?action=delete">Delete Patient</a>
           </div>
           <li>
-              <a href="">View</a>
+              <a href="/viewpatients.jsp">View</a>
           </li>
           <li><a href="/searchpatient.jsp">Search Patient</a></li>   
         </li>
