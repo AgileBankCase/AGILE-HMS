@@ -76,7 +76,9 @@ li.dropdown {
             <a href="/searchpatient.jsp?action=delete">Delete Patient</a>
           </div>
           <li>
-              <a href="">View</a>
+
+              <a href="/viewpatient.jsp">View</a>
+
           </li>
           <li><a href="/searchpatient.jsp">Search Patient</a></li>   
         </li>
@@ -92,4 +94,6 @@ function confirmLogout(){
 }
 </script>
 </body>
+
 </html>
+
