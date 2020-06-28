@@ -121,7 +121,7 @@ public class Patient extends HttpServlet {
 		resp.getOutputStream().print("{\"status\":\"Delete failed\"}");
 		return;
 	}
-	
+	 
 	// doGet()//used for customer status display if time permits
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
