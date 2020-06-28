@@ -26,54 +26,88 @@ body{
     </style>
 </head>
 <body>
-  <div class="header">
-    <h1 align='center'><strong>AGILE HOSPITAL MANAGEMENT</strong></h1>
-</div>
+ <jsp:include page="header1.jsp" />
+  
 <tr> <td>&nbsp;</td> </tr>
 
  <div class="main-section">
 <table border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
 <tr>
     <td align='center'>Patient Id</td>
-    <td><input name='patid' pattern="[0-9]{9}"></td>
+    <td><input id='patId' pattern="[0-9]{9}"></td>
+    <td><button onclick="view()" name="view" value="View">View</button></td>
 </tr><br> </br>
-<table border='0' cellpadding='0' cellspacing='0' width='480px' align='center'>
-    <tr>
-        <td align='center'><button onclick="view()" name="view" value="View">View</button></td>
-    </tr>
     </table>
-     
+    </div>
+    <div id="patient_details" style="display:none">
+    <table border='1' width='700px' cellpadding='4' cellspacing='0' align='center'>
+    <tr>
+    <th>Patient Id</th>
+    <th>Patient SSN ID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Date of Admission</th>
+    <th>Type of bed</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Status</th>
+    </tr>
+    <tr>
+    <td><span id='patId2'></span></td>
+     <td><span id='ssnId'></span></td>
+      <td><span id='name'></span></td>
+       <td><span id='age'></span></td>
+        <td><span id='doa'></span></td>
+         <td><span id='bed'></span></td>
+          <td><span id='address'></span></td>
+           <td><span id='city'></span></td>
+            <td><span id='state'></span></td>
+            <td><span id='status'></span></td>
+          
+    </tr>
     </table>
     </div>
 </body>
    <script>
       function view()
       {
+    	  
     $.ajax({
 				method : "get",
-				url : "/patient",
-				data : $('#search').serialize() + "&action=" + action,
+				url : "/patient?patId="+$('#patId').val(),
 				success : function(data)
 				{
+					
 					var json = JSON.parse(data);
-					var patient_details=[];
-					patient_details=json["patient_details"];
-					if(patient_details.length!=0)
-					{
-						 if(action=="delete")
-						 {
-							patient_details.forEach(user => 
-							{
-								$("#ssnID").html(user["SSN_ID"]);
-								$("#name").html(user["name"]);
-								$("#age").html(user["age"]);
-								$("#doj").html(user["DOA"]);
-								$("#bed").html(user["type_of_bed"]);
-								$("#addr").html(user["address"]);
-								$("#city").html(user["city"]);
-								$("#state").html(user["state"]);
-
-							});
+					if(json["status"]!=undefined){
+						alert(json["status"]);
+					}
+					else {
+						var patient_details=[];
+						patient_details=json["patient_details"];
+						if(patient_details.length!=0)
+						{
+							 
+								patient_details.forEach(user => 
+								{
+									$("#patId2").html(user["patient_ID"]);
+									$("#ssnId").html(user["SSN_ID"]);
+									$("#name").html(user["name"]);
+									$("#age").html(user["age"]);
+									$("#doa").html(user["DOA"]);
+									$("#bed").html(user["type_of_bed"]);
+									$("#address").html(user["address"]);
+									$("#city").html(user["city"]);
+									$("#state").html(user["state"]);
+									$("#status").html(user["status"]);
+									
+								});
+							$("#patient_details").css("display","block");
+						}
+						else {
+							
+							alert("Please Enter Valid Patient ID");
 						}
 					}
 				}

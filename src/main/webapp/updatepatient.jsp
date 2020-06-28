@@ -15,6 +15,7 @@
 </head>
 <body bgcolor=#E6E6FA>
 	<jsp:include page="header1.jsp" />
+	
 	<div class="main-section">
 	<form>
 		<table border='0' width='480px' cellpadding='0' cellspacing='0'
@@ -182,7 +183,7 @@
 							{
 								$("#ssnID").html(user["SSN_ID"]);
 								$("#patID").html(user["pat_ID"]);
-								$("#name").html(user["name"]);
+								$("#name").value(user["name"]);
 								$("#age").html(user["age"]);
 								$("#doj").html(user["DOA"]);
 								$("#bed").html(user["type_of_bed"]);
