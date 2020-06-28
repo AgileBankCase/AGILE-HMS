@@ -47,7 +47,7 @@ public class AccountDAO {
 			
 			stmt.setString(1, name);
 			stmt.setInt(2, age);
-			stmt.setString(3,DOA)
+			stmt.setString(3,DOA);
 			stmt.setString(4, type_of_bed);
 			stmt.setString(5, address);
 			stmt.setString(6, city);
