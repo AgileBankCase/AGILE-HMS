@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
-							<td><input type="date" name="DOA"></td>
+							<td><input type="date" name="doa"></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
