@@ -37,7 +37,7 @@ public class AccountDAO {
 		}
 		return affectedRows;
 	}
-	public static int updatePatient(long patientID,String name,int age,String address,String city,String state,,String type_of_bed,String DOA ) {
+	public static int updatePatient(long patientID,String name,int age,String address,String city,String state,String type_of_bed,String DOA ) {
 		int affectedRows = 0;
 		try {
 			Connection conn = DBUtil.getConnection();
