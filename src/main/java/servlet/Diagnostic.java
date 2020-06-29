@@ -24,7 +24,7 @@ import org.json.simple.JSONObject;
 import dao.DiagnosticDAO;
 import service.Validator;
 
-@WebServlet(name = "medicine", urlPatterns = { "/diagno" })
+@WebServlet(name = "diagno", urlPatterns = { "/diagno" })
 public class Diagnostic extends HttpServlet {
 	static Logger logger = Logger.getLogger(Diagnostic.class.getName());
 
@@ -82,6 +82,7 @@ public class Diagnostic extends HttpServlet {
 	    		return;
 	    	}
 	    	else {
+	    		
 	    		resp.getOutputStream().print(json.toString());
 	        	return;
 	    	}

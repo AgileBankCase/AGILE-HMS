@@ -34,83 +34,80 @@ public class Medicine extends HttpServlet {
 			String patIdStr = req.getParameter("patId");
 			String medName = req.getParameter("medName");
 			String issueQuantityStr = req.getParameter("issueQuantity");
-			
-			if (!(Validator.isValidString(patIdStr) && Validator.isValidString(medName) && Validator.isValidString(issueQuantityStr))) {
+
+			if (!(Validator.isValidString(patIdStr) && Validator.isValidString(medName)
+					&& Validator.isValidString(issueQuantityStr))) {
 				resp.getOutputStream().print("{\"status\":\"Please Enter ALL Fields\"}");
 				return;
 			}
-			long patId=-1l;
-			int issueQuantity=-1;
-			if(Validator.isValidString(patIdStr)) {patId=Long.parseLong(patIdStr);}
-	
+			long patId = -1l;
+			int issueQuantity = -1;
+			if (Validator.isValidString(patIdStr)) {
+				patId = Long.parseLong(patIdStr);
+			}
 
-			 issueQuantity = Integer.parseInt(issueQuantityStr);
-			 JSONObject json=MedicineDAO.getMedicine(medName);
-			 JSONArray patientMedicine=(JSONArray) json.get("Medicine_Details");
-			 
- 				JSONObject record = (JSONObject) patientMedicine.get(0);
- 				int availableQuantity= (Integer)record.get("quantity");
- 				if(availableQuantity > issueQuantity) {
- 					int setValue=availableQuantity-issueQuantity;
- 					int result = MedicineDAO.issueMedicine(patId, medName, issueQuantity,setValue);
- 					if (result > 0) {
- 						resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
- 						return;
- 					}
- 				}
- 				else {
- 					resp.getOutputStream().print("{\"status\":\"Quantity Not Available\"}");
+			issueQuantity = Integer.parseInt(issueQuantityStr);
+			JSONObject json = MedicineDAO.getMedicine(medName);
+			JSONArray patientMedicine = (JSONArray) json.get("Medicine_Details");
+
+			JSONObject record = (JSONObject) patientMedicine.get(0);
+			int availableQuantity = (Integer) record.get("quantity");
+			if (availableQuantity >= issueQuantity) {
+				int setValue = availableQuantity - issueQuantity;
+				int result = MedicineDAO.issueMedicine(patId, medName, issueQuantity, setValue);
+				if (result > 0) {
+					resp.getOutputStream().print("{\"status\":\"Succesfully Added!\"}");
 					return;
- 				}
- 				
-			
+				}
+			} else {
+				resp.getOutputStream().print("{\"status\":\"Quantity Not Available\"}");
+				return;
+			}
+
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception occured", e);
 		}
-		resp.getOutputStream().print("{\"status\":\"Registration failed\"}");
+		resp.getOutputStream().print("{\"status\":\"Adding failed\"}");
 		return;
 	}
 
 	// doGet()//used for customer status display if time permits
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String patIdStr = req.getParameter("patId");
-		String medName=req.getParameter("medName");
-		long patId=-1l;
-    	if(Validator.isValidString(patIdStr)) {
-    		patId=Long.parseLong(patIdStr);
-    		JSONObject json=MedicineDAO.getIssuedMedicine(patId);
-    		if(((JSONArray)json.get("Patient_Medicine_Details"))==null) {
-        		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
-        		return;
-        	}
-    		else {
-    			JSONArray patientMedicine = (JSONArray) json.get("Patient_Medicine_Details");
-    			for(int i=0;i <  patientMedicine.size();i++)
-    			{
-    				JSONObject record = (JSONObject) patientMedicine.get(i);
-    				record.put("amount", ((Integer)record.get("issued_quantity"))*((Double)record.get("rate")));
-    			}
-    			resp.getOutputStream().print(json.toString());
-    	    	return;
-    		}
-    	}
-    	else if(Validator.isValidString(medName)){
-    		
-    		JSONObject json=MedicineDAO.getMedicine(medName);
-	    	if(((JSONArray)json.get("Medicine_Details"))==null) {
-	    		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Medicine Name\"}");
-	    		return;
-	    	}
-	    	else {
-	    		resp.getOutputStream().print(json.toString());
-	        	return;
-	    	}
-    	}
-    	else {
-    		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Medicine Name\"}");
-    		return;
-    	}
-    }
-    
+		String medName = req.getParameter("medName");
+		long patId = -1l;
+		if (Validator.isValidString(patIdStr)) {
+			patId = Long.parseLong(patIdStr);
+			JSONObject json = MedicineDAO.getIssuedMedicine(patId);
+			if (((JSONArray) json.get("Patient_Medicine_Details")) == null) {
+				resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
+				return;
+			} else {
+				JSONObject record = new JSONObject();
+				int amount = 0;
+				JSONArray patientMedicine = (JSONArray) json.get("Patient_Medicine_Details");
+				for (int i = 0; i < patientMedicine.size(); i++) {
+					record = (JSONObject) patientMedicine.get(i);
+					record.put("amount", ((Integer) record.get("issued_quantity")) * ((Double) record.get("rate")));
+					
+				}
+				resp.getOutputStream().print(json.toString());
+				return;
+			}
+		} else if (Validator.isValidString(medName)) {
+
+			JSONObject json = MedicineDAO.getMedicine(medName);
+			if (!(((JSONArray) json.get("Medicine_Details"))!=null && !((JSONArray) json.get("Medicine_Details")).isEmpty())) {
+				resp.getOutputStream().print("{\"status\":\"Please Enter Valid Medicine Name\"}");
+				return;
+			} else {
+				resp.getOutputStream().print(json.toString());
+				return;
+			}
+		} else {
+			resp.getOutputStream().print("{\"status\":\"Please Enter Valid Medicine Name\"}");
+			return;
+		}
+	}
+
 }

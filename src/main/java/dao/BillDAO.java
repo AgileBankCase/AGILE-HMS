@@ -24,12 +24,11 @@ public class BillDAO
 		{
 			Connection conn = DBUtil.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("UPDATE public.patient_table\r\n" + 
-					"	SET \"DOD\"=?, status=?, no_of_days=?\r\n" + 
+					"	SET \"DOD\"='now()', status=?, no_of_days=?\r\n" + 
 					"	WHERE \"patient_ID\"=?;");
-			stmt.setDate(1,now());
-			stmt.setString(2, 'discharged');
-			stmt.setInt(3, no_of_days);
-			stmt.setLong(4, patient_Id);
+			stmt.setString(1, "discharged");
+			stmt.setInt(2, no_of_days);
+			stmt.setLong(3, patient_Id);
 			
 			affectedRows = stmt.executeUpdate();
 
