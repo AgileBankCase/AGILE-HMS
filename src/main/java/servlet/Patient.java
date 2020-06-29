@@ -87,7 +87,7 @@ public class Patient extends HttpServlet {
 	    		 patId=Long.parseLong(patIdStr);
 	    	}
 			
-			int result = PatientDAO.updatePatient(patId, name, age, address, state, city, bed, doa);
+			int result = PatientDAO.updatePatient(patId, name, age, address, city, state, bed, doa);
 			if (result > 0) {
 				resp.getOutputStream().print("{\"status\":\"Succesfully Updated!\"}");
 				return;

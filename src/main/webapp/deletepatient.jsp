@@ -1,158 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body{
-    font-family: 'Lato', sans-serif;
+<style>
+body {
+	font-family: 'Lato', sans-serif;
 	position: relative;
-	background:#ece6e6;
+	background: #ece6e6;
 	margin: 20px;
 }
-.main-section{
-    color:black;
+
+.main-section {
+	color: black;
 }
 </style>
 </head>
 <body bgcolor=#E6E6FA>
 	<jsp:include page="header1.jsp" />
 	<div class="main-section">
-	<form>
 		<table border='0' width='480px' cellpadding='0' cellspacing='0'
 			align='center'>
 			<center>
 				<tr>
-					<td><h1 align='center'>Delete Patient</h1></td>
+					<td colspan='2'><h1 align='center'>Delete Patient</h1></td>
 				</tr>
 				<center>
-
-					<table border='0' width='480px' cellpadding='0' cellspacing='0'
-						align='center'>
-						<tr>
-							<td align='left'>Patient SSN Id</td>
-                            <td><input id="ssn-id" name='ssnId' pattern="[0-9]{9}" required></td>
-
-                            <td><button onclick="get()">Get</button></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td align='left'>Patient Id</td>
-                            <td><input id="pat-id" name='patId' pattern="[0-9]{9}" required></td>
-                            <td><button onclick="get()">Get</button></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-						</tr>
-
-						<tr>
-							<td align='left'>Patient Name</td>
-							<td><input id="name" type='text' name='cname' pattern="[A-Za-z]+" required></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td align='left'>Patient Age</td>
-							<td><input id="age" name='age' min="1" max="3" pattern="[0-9]"></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-                        </tr>
-                        <tr>
-							<td align='left'>Date of Admission</td>
-
-							<td><input id="doj" type="date" name="doa"></td>
-
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td align='left'>Type of Bed</td>
-							<td><select name="bed" id="bed">
-									<option>Select</option>
-									<option>General Ward</option>
-									<option>Semi sharing</option>
-									<option>Single room</option>
-                                </select><br />
-                                <br /></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-						<tr>
-							<td align='left'>Address</td>
-							<td><input name='addline' id="addr"></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td align='left'>City</td>
-							<td><select name="city" id="city">
-									<option>Select</option>
-									<option>Pune</option>
-									<option>Chennai</option>
-									<option>Mumbai</option>
-									<option>Raigad</option>
-									<option>Nagpur</option>
-									<option>Nasik</option>
-									<option>Raigad</option>
-									<option>Nagar</option>
-									<option>Kolhapur</option>
-									<option>Solapur</option>
-							</select><br />
-							<br /></td>
-
-						</tr>
-
-						<tr>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td align='left'>State</td>
-							<td><select name="state" id="state">
-									<option>Select</option>
-									<option>Arunachal Pradesh</option>
-									<option>Assam</option>
-									<option>Goa</option>
-									<option>Manipur</option>
-									<option>Maharashtra</option>
-									<option>Karnataka</option>
-									<option>Andhra Pradesh</option>
-									<option>Telungana</option>
-									<option>Tamil Nadu</option>
-									<option>West Bengal</option>
-							</select><br />
-							<br /></td>
-
-						</tr>
-
-						<table border='0' cellpadding='0' cellspacing='0' width='480px'
-							align='center'>
-							<tr>
-								<td align='center'><button onclick="register(event)">Delete</button></td>
-								<td align='center'><button onclick="cancelEvent(event)">Cancel</button></td>
-
-							</tr>
-
-                        </table>
-					</table>
+			<tr>
+				<td align='left'>Patient Id</td>
+				<td><input id="pat-id" name='patId' pattern="[0-9]{9}" required>
+				<button onclick="get(event)">Get</button></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
 		</table>
-	</form>
+		<table id="deletepatient" class="hide"  border='0' width='480px' cellpadding='0' cellspacing='0'
+			align='center'>
+			<tr>
+				<td align='left'>Patient SSN Id</td>
+				<td><span id="ssnID"></span><input type="hidden" id="patId"></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+
+			<tr>
+				<td align='left'>Patient Name</td>
+				<td><span id="name"></span></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align='left'>Patient Age</td>
+				<td><span id="age"></span></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align='left'>Date of Admission</td>
+
+				<td><span id="doj"></span></td>
+
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align='left'>Type of Bed</td>
+				<td><span id="bed"></span><br /> <br /></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align='left'>Address</td>
+				<td><span id="addr"></span></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align='left'>City</td>
+				<td><span id="city"></span><br /> <br /></td>
+
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align='left'>State</td>
+				<td><span id="state"></span><br /> <br /></td>
+
+			</tr>
+			<tr>
+				<td align='center'><button onclick="deletePatient(event)">Delete</button></td>
+				<td align='center'><button onclick="cancelEvent(event)">Cancel</button></td>
+
+			</tr>
+
+
+		</table>
 	</div>
 </body>
 <script>
-	function deletePatient() {
-		window.location.href = "/searchpatient.jsp?action=delete";
-	}
-	function register(event) {
+	
+	function deletePatient(event) {
 		event.preventDefault();
 		if(confirm("Are you sure you want to delete?")){
 			$.ajax({
 				type : "delete",
-				url : "/patient?" + "ssn-id=" + $("#ssn-ID").html(),
+				url : "/patient?patId=" + $("#patId").val(),
 				success : function(data) {
 					var json = JSON.parse(data);
 					alert(json["status"]);
@@ -164,27 +123,27 @@
 			});
 			}
     }
-    function get()
+    function get(event)
 {
+	event.preventDefault();
 
     $.ajax(
 		{
 				method : "get",
-				url : "/patient",
-				data : $('#search').serialize() + "&action=" + action,
+				url : "/patient?patId=" + $("#pat-id").val(),
+				
 				success : function(data)
 				 {
 					var json = JSON.parse(data);
 					var patient_details=[];
-					patient_details=json["User_Details"];
+					patient_details=json["patient_details"];
 					if(patient_details.length!=0)
 					{
-						 if(action=="delete")
-						 {
+						 
 							patient_details.forEach(user => 
 							{
 								$("#ssnID").html(user["SSN_ID"]);
-								$("#patID").html(user["pat_ID"]);
+								$("#patId").val(user["patient_ID"]);
 								$("#name").html(user["name"]);
 								$("#age").html(user["age"]);
 								$("#doj").html(user["DOA"]);
@@ -195,8 +154,6 @@
 
 							});
 							$("#deletepatient").attr("class","");
-							$("#searchpatient").attr("class","hide");	
-						}
 					}else
 					{
 
@@ -205,11 +162,6 @@
 				}
 			});
 		}
-		function cancelEvent(event){
-			event.preventDefault();
-			$("#deletepatient").attr("class","hide");
-			$("#updatepatient").attr("class","hide");
-			$("#searchpatient").attr("class","");
-		}</script>
+		</script>
 
 </html>

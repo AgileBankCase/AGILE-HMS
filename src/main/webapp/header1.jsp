@@ -72,8 +72,8 @@ li.dropdown {
           <a href="javascript:void(0)" class="dropbtn">Patient Management</a>
           <div class="dropdown-content">
             <a href="/createpatient.jsp">Create Patient</a>
-            <a href="/searchpatient.jsp?action=update">Update Patient</a>
-            <a href="/searchpatient.jsp?action=delete">Delete Patient</a>
+            <a href="/updatepatient.jsp">Update Patient</a>
+            <a href="/deletepatient.jsp">Delete Patient</a>
           </div>
           <li>
 
@@ -83,7 +83,7 @@ li.dropdown {
           <li><a href="/searchpatient.jsp">Search Patient</a></li>   
         </li>
         <li>
-          <a href="">General Bill</a>
+          <a href="/finalbilling.jsp">General Bill</a>
       </li>
         <li><a onclick="confirmLogout()" >Logout</a></li>
         

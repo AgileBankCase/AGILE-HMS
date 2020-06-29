@@ -20,22 +20,15 @@
 <table border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
 <center><tr>
    <td><h1 align='center'>View Patients</h1></td>
-   <td><button onclick="viewPatient()">VIEW ACTIVE PATIENTS</button></td>
 </tr><center>
     <table border="1"cellpadding='0' cellspacing='0' width='480px' align='center' id="view_patients">
-    <tr>
-      <th>Patient ID</th>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th>Date of Admission</th>
-      <th>Type of Room</th>
-    </tr>
+    
   </table>
   <tr> <td>&nbsp;</td> </tr>
   <tr> <td>&nbsp;</td> </tr>
   </body>
     <script>
+    document.onready(viewPatient());
     function viewPatient()
     {
   	  
@@ -54,7 +47,15 @@
 						patient_details=json["patient_details"];
 						if(patient_details.length!=0)
 						{var patient_data ='';
-							 
+						$('#view_patients').html("");
+							 patient_data+="<tr>"+
+							      "<th>Patient ID</th>"+
+							      "<th>Name</th>"+
+							      "<th>Age</th>"+
+							      "<th>Address</th>"+
+							      "<th>Date of Admission</th>"+
+							      "<th>Type of Room</th>"+
+							    "</tr>";
 								patient_details.forEach(user => 
 								{
 									 patient_data += '<tr>';

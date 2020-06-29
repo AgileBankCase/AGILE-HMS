@@ -52,11 +52,11 @@ public class Medicine extends HttpServlet {
 
 			JSONObject record = (JSONObject) patientMedicine.get(0);
 			int availableQuantity = (Integer) record.get("quantity");
-			if (availableQuantity > issueQuantity) {
+			if (availableQuantity >= issueQuantity) {
 				int setValue = availableQuantity - issueQuantity;
 				int result = MedicineDAO.issueMedicine(patId, medName, issueQuantity, setValue);
 				if (result > 0) {
-					resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
+					resp.getOutputStream().print("{\"status\":\"Succesfully Added!\"}");
 					return;
 				}
 			} else {
@@ -67,7 +67,7 @@ public class Medicine extends HttpServlet {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception occured", e);
 		}
-		resp.getOutputStream().print("{\"status\":\"Registration failed\"}");
+		resp.getOutputStream().print("{\"status\":\"Adding failed\"}");
 		return;
 	}
 
@@ -83,14 +83,21 @@ public class Medicine extends HttpServlet {
 				resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
 				return;
 			} else {
-				
+				JSONObject record = new JSONObject();
+				int amount = 0;
+				JSONArray patientMedicine = (JSONArray) json.get("Patient_Medicine_Details");
+				for (int i = 0; i < patientMedicine.size(); i++) {
+					record = (JSONObject) patientMedicine.get(i);
+					record.put("amount", ((Integer) record.get("issued_quantity")) * ((Double) record.get("rate")));
+					
+				}
 				resp.getOutputStream().print(json.toString());
 				return;
 			}
 		} else if (Validator.isValidString(medName)) {
 
 			JSONObject json = MedicineDAO.getMedicine(medName);
-			if (((JSONArray) json.get("Medicine_Details")) == null) {
+			if (!(((JSONArray) json.get("Medicine_Details"))!=null && !((JSONArray) json.get("Medicine_Details")).isEmpty())) {
 				resp.getOutputStream().print("{\"status\":\"Please Enter Valid Medicine Name\"}");
 				return;
 			} else {

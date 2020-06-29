@@ -82,10 +82,11 @@ public class PatientDAO {
 			ResultSet rs=stmt.executeQuery();
 			
 			JSONArray array = new JSONArray();
-			  JSONObject record = new JSONObject();
+			  
 
 			//converting resultset into json
 			while(rs.next()) {
+				JSONObject record = new JSONObject();
 				   //Inserting key-value pairs into the json object
 				   record.put("SSN_ID", rs.getLong("SSN_ID"));
 				   record.put("name", rs.getString("name"));

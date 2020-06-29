@@ -59,13 +59,14 @@ public class MedicineDAO {
 			stmt.setString(1,medicineName);
 			ResultSet rs=stmt.executeQuery();
 			JSONObject record = new JSONObject();
-					rs.next();
+					if(rs.next()) {
 				   //Inserting key-value pairs into the json object
 				   record.put("medicine_ID", rs.getLong("medicine_ID"));
 				   record.put("medicine_name", rs.getString("medicine_name"));
 				   record.put("quantity", rs.getInt("quantity"));
 				   record.put("rate", rs.getDouble("rate"));
 				   array.add(record);
+					}
 			jsonObject.put("Medicine_Details",array);
 			
 		}catch(Exception e) {
