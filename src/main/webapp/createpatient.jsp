@@ -16,7 +16,7 @@
 <body bgcolor=#E6E6FA>
 	<jsp:include page="header1.jsp" />
 	<div class="main-section">
-	<form>
+	<form id='regis'>
 		<table border='0' width='480px' cellpadding='0' cellspacing='0'
 			align='center'>
 			<center>
@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
 							<td align='left'>Date of Admission</td>
-							<td><input type="date" name="DOA"></td>
+							<td><input type="date" name="doa"></td>
 
 						</tr>
 						<tr>
@@ -135,15 +135,12 @@
 	</div>
 </body>
 <script>
-	function updatePatient() {
-		window.location.href = "/searchpatient.jsp?action=update";
-	}
 	function register(event) {
 		event.preventDefault();
 		$.ajax({
 			method : "post",
 			url : "/patient",
-			data : $('form').serialize(),
+			data : $('#regis').serialize(),
 			success : function(data) {
 				var json = JSON.parse(data);
 				alert(json["status"]);
