@@ -131,7 +131,7 @@ public class Patient extends HttpServlet {
     		patId=Long.parseLong(patIdStr);
     	}
     	JSONObject json=PatientDAO.get(patId);
-    	if(((JSONArray)json.get("patient_details")).isEmpty()) {
+    	if(((JSONArray)json.get("patient_details"))==null) {
     		resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
     		return;
     	}
