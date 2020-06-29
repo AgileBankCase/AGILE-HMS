@@ -68,25 +68,10 @@ li.dropdown {
 </h1>
 <ul>
         <li><a href="/createpatient.jsp">Hello ${uname}!!!</a></li>
-        <li class="dropdown">
-          <a href="javascript:void(0)" class="dropbtn">Patient Management</a>
-          <div class="dropdown-content">
-            <a href="/createpatient.jsp">Create Patient</a>
-            <a href="/searchpatient.jsp?action=update">Update Patient</a>
-            <a href="/searchpatient.jsp?action=delete">Delete Patient</a>
-          </div>
-          <li>
+        <li><a href="/searchpatient.jsp">Patient Search</a></li>
+        <li><a href="/diagnostics.jsp">Add Diagnostics</a></li>
 
-              <a href="/viewpatient.jsp">View</a>
-
-          </li>
-          <li><a href="/searchpatient.jsp">Search Patient</a></li>   
-        </li>
-        <li>
-          <a href="">General Bill</a>
-      </li>
         <li><a onclick="confirmLogout()" >Logout</a></li>
-        
       </ul>
     </div>
 </div>
@@ -98,6 +83,4 @@ function confirmLogout(){
 }
 </script>
 </body>
-
 </html>
-
