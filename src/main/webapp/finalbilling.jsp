@@ -189,9 +189,10 @@ body {
 					    });
 					       $('#issuedMedicine').append(patient_data);
 							
-						$("#meddiv").attr("class","medicine");
+						
 						
 					}
+					$("#meddiv").attr("class","medicine");
 					
 				}
 			}
@@ -232,8 +233,8 @@ body {
 					    });
 					       $('#issuedDiagnostics').append(patient_data);
 							
-						$("#diagdiv").attr("class","diagnostics");
-					}
+						
+					}$("#diagdiv").attr("class","diagnostics");
 					
 				}
 			}
