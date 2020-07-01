@@ -232,7 +232,7 @@ body {
 					    });
 					       $('#issuedDiagnostics').append(patient_data);
 							
-						$("#diagdiv").attr("class","medicine");
+						$("#diagdiv").attr("class","diagnostics");
 					}
 					
 				}
