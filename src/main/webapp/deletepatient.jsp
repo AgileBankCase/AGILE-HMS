@@ -27,7 +27,7 @@ body {
 			<tr>
 				<td align='left'>Patient Id</td>
 				<td><input id="pat-id" name='patId' pattern="[0-9]{9}" required>
-				<button onclick="get(event)">Get</button></td>
+				<button onclick="get(event)">Get</button><input type="hidden" id="status"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -151,6 +151,7 @@ body {
 								$("#addr").html(user["address"]);
 								$("#city").html(user["city"]);
 								$("#state").html(user["state"]);
+								$("#status").val(user["status"]);
 
 							});
 							$("#deletepatient").attr("class","");

@@ -38,12 +38,13 @@ public class PatientDAO {
 		}
 		return affectedRows;
 	}
-	public static int updatePatient(long patientID,String name,int age,String address,String city,String state,String type_of_bed,Date DOA ) {
+	//get extra status parameter
+	public static int updatePatient(long patientID,String name,int age,String address,String city,String state,String type_of_bed,Date DOA,String status ) {
 		int affectedRows = 0;
 		try {
 			Connection conn = DBUtil.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("UPDATE public.patient_table\r\n" + 
-					"			SET name=?, age=?, \"DOA\"=?, type_of_bed=?, address=?, city=?, state=?\r\n" + 
+					"			SET name=?, age=?, \"DOA\"=?, type_of_bed=?, address=?, city=?, state=?, status=?\r\n" + 
 					"			WHERE \"patient_ID\"=?;");
 			
 			stmt.setString(1, name);
@@ -53,8 +54,8 @@ public class PatientDAO {
 			stmt.setString(5, address);
 			stmt.setString(6, city);
 			stmt.setString(7, state);
-			stmt.setLong(8, patientID);
-			
+			stmt.setString(8, status);
+			stmt.setLong(9, patientID);
 
 			affectedRows = stmt.executeUpdate();
 

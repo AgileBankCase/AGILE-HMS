@@ -89,6 +89,14 @@ body {
 					</select><br /> <br /></td>
 				</tr>
 				<tr>
+					<td align='left'>Status</td>
+					<td><select name="status" id="status">
+							<option value="Select">Select</option>
+							<option value="active">active</option>
+							<option value="discharged">discharged</option>
+					</select><br /> <br /></td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
@@ -149,7 +157,9 @@ body {
 </body>
 <script>
 	function register(event) {
+		
 		event.preventDefault();
+		if($("#status").val()=="active"){
 		$.ajax({
 			method : "put",
 			url : "/patient?" + $('form').serialize(),
@@ -161,6 +171,10 @@ body {
 				}
 			}
 		});
+		}
+		else {
+			alert("Please Generate Bill and complete payment to discharge the patient.");
+		}
 	}
 	function getpatient(event) {
 		event.preventDefault();
@@ -183,7 +197,7 @@ body {
 					$("#bed").val(user["type_of_bed"]);
 					$("#address").val(user["address"]);
 					$("#city").val(user["city"]);
-					console.log(user["city"] + user["state"]);
+					$("#status").val(user["status"]);
 					$("#state").val(user["state"]);
 					$("#updatepatient").attr("class", "");
 				} else {

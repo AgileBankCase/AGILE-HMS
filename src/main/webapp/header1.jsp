@@ -67,7 +67,7 @@ li.dropdown {
 	<strong>AGILE HOSPITAL MANAGEMENT</strong>
 </h1>
 <ul>
-        <li><a href="/createpatient.jsp">Hello ${uname}!!!</a></li>
+        <li>Hello ${uname}!!!</a></li>
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropbtn">Patient Management</a>
           <div class="dropdown-content">
@@ -80,15 +80,14 @@ li.dropdown {
               <a href="/viewpatient.jsp">View</a>
 
           </li>
-          <li><a href="/searchpatient.jsp">Search Patient</a></li>   
+          <li><a href="/searchpatient.jsp">Search Patient</a> 
         </li>
         <li>
-          <a href="/finalbilling.jsp">General Bill</a>
+          <a href="/finalbilling.jsp">Generate Bill</a>
       </li>
         <li><a onclick="confirmLogout()" >Logout</a></li>
         
       </ul>
-    </div>
 </div>
 <script>
 function confirmLogout(){
