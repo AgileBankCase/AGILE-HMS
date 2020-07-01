@@ -75,6 +75,10 @@ public class Bill extends HttpServlet {
 		String patIdStr = req.getParameter("patId");
 		long patId = -1l;
 		Double totalBill = 0.0;
+		
+		
+		
+		
 		JSONObject resultJson = new JSONObject();
 		if (Validator.isValidString(patIdStr)) {
 			patId = Long.parseLong(patIdStr);
@@ -84,12 +88,26 @@ public class Bill extends HttpServlet {
 				return;
 			} else {
 
-				JSONArray array = new JSONArray();
-				JSONObject record = new JSONObject();
-				array = (JSONArray) json.get("patient_details");
-				record = (JSONObject) array.get(0);
+				
+				
+				
+				JSONArray array = (JSONArray) json.get("patient_details");
+				JSONObject record = (JSONObject) array.get(0);
+				Date doa = Date.valueOf((String) record.get("DOA"));
+				long doaMillis = doa.getTime();
+				long millis = System.currentTimeMillis();
+				if(doaMillis < millis)
+				{
+				int billForRoom=0;
+				int roomCharge = 0;
+				long daysDiff = (long) (millis - doaMillis);
+				int numDays = (int) (daysDiff / (60 * 60 * 24 * 1000));
+				
+				
+				
+				
 				if (record.get("no_of_days") != null) {
-					int roomCharge = 0;
+					 roomCharge = 0;
 					if (record.get("type_of_bed").equals("Single room")) {
 						roomCharge = 8000;
 					} else if (record.get("type_of_bed").equals("Semi sharing")) {
@@ -97,10 +115,17 @@ public class Bill extends HttpServlet {
 					} else if (record.get("type_of_bed").equals("General Ward")) {
 						roomCharge = 2000;
 					}
-					int billForRoom = (Integer) (record.get("no_of_days")) * roomCharge;
+					 billForRoom = (Integer) (record.get("no_of_days")) * roomCharge;
+					
 					resultJson.put("bill_for_room", billForRoom);
-					resultJson.put("no_of_days", record.get("no_of_days"));
+					resultJson.put("no_of_days", numDays);
 					totalBill += billForRoom;
+				}
+				}
+				else {
+					resultJson.put("bill_for_room", 0);
+					resultJson.put("no_of_days",0);
+					totalBill=0.0;
 				}
 				json=MedicineDAO.getIssuedMedicine(patId);
 				record = new JSONObject();

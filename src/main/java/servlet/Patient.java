@@ -54,12 +54,22 @@ public class Patient extends HttpServlet {
 			if(Validator.isValidString(ssnIdStr)) {ssnId=Long.parseLong(ssnIdStr);}
 			Date doa=Date.valueOf(doaStr);
 
-			int age = Integer.parseInt(ageStr);
 			
-			int result = PatientDAO.createPatient(ssnId, name, age, address, city, state,bed,doa);
-			if (result > 0) {
-				ssnID.add(ssnIdStr);
-				resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
+			long doaMillis = doa.getTime();
+			long millis = System.currentTimeMillis();
+			if((long) (millis - doaMillis) > 0)
+			{
+				int age = Integer.parseInt(ageStr);
+				
+				int result = PatientDAO.createPatient(ssnId, name, age, address, city, state,bed,doa);
+				if (result > 0) {
+					ssnID.add(ssnIdStr);
+					resp.getOutputStream().print("{\"status\":\"Succesfully Registered!\"}");
+					return;
+				}
+			}
+			else {
+				resp.getOutputStream().print("{\"status\":\"Please enter a valid date of admission!\"}");
 				return;
 			}
 		} catch (Exception e) {
@@ -148,26 +158,46 @@ public class Patient extends HttpServlet {
     	
     	if(Validator.isValidString(genBillStr) && genBillStr.equals("true")) {
     		JSONArray patientDetails = (JSONArray) json.get("patient_details");
+    		if(patientDetails.size() > 0)
+    		{
 			JSONObject record = (JSONObject) patientDetails.get(0);
     		Date doa = Date.valueOf((String) record.get("DOA"));
 			long doaMillis = doa.getTime();
 			long millis = System.currentTimeMillis();
-			
-			long daysDiff = (long) (millis - doaMillis);
-			int numDays = (int) (daysDiff / (60 * 60 * 24 * 1000));
-			if (numDays > 0) {
-				int roomCharge = 0;
-				record.put("no_of_days",numDays);
-				if (record.get("type_of_bed").equals("Single room")) {
-					roomCharge = 8000;
-				} else if (record.get("type_of_bed").equals("Semi sharing")) {
-					roomCharge = 4000;
-				} else if (record.get("type_of_bed").equals("General Ward")) {
-					roomCharge = 2000;
+			int billForRoom=0;
+			int roomCharge = 0;
+			int numDays=0;
+			if((long) (millis - doaMillis) >= 0)
+			{
+				long daysDiff = (long) (millis - doaMillis);
+			 numDays = (int) (daysDiff / (60 * 60 * 24 * 1000));
+				if (numDays > 0) {
+					
+					record.put("no_of_days",numDays);
+					if (record.get("type_of_bed").equals("Single room")) {
+						roomCharge = 8000;
+					} else if (record.get("type_of_bed").equals("Semi sharing")) {
+						roomCharge = 4000;
+					} else if (record.get("type_of_bed").equals("General Ward")) {
+						roomCharge = 2000;
+					}
+					billForRoom = numDays * roomCharge;
+					record.put("bill_for_room",billForRoom);
 				}
-				int billForRoom = (Integer) (record.get("no_of_days")) * roomCharge;
-				record.put("bill_for_room",billForRoom);
+				else {
+					record.put("no_of_days",0);
+					record.put("bill_for_room",0);
+				}
+    		}
+			else {
+				record.put("no_of_days",0);
+				record.put("bill_for_room",0);
 			}
+    		}
+    		else {
+    			resp.getOutputStream().print("{\"status\":\"Please Enter Valid Patient ID\"}");
+    	    	return;
+    		}
     	}
     	resp.getOutputStream().print(json.toString());
     	return;

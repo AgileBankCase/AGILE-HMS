@@ -173,7 +173,7 @@ body {
 		});
 		}
 		else {
-			alert("Please Discharge the Patient to Delete");
+			alert("Please Generate Bill and complete payment to discharge the patient.");
 		}
 	}
 	function getpatient(event) {
