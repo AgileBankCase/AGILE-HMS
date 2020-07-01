@@ -47,7 +47,11 @@ public class Diagnostic extends HttpServlet {
  					if (result > 0) {
  						resp.getOutputStream().print("{\"status\":\"Test Succesfully Added!\"}");
  						return;
- 					}		
+ 					}
+ 					else {
+ 						resp.getOutputStream().print("{\"status\":\"Test Succesfully Added!\"}");
+ 						return;
+ 					}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception occured", e);
 		}

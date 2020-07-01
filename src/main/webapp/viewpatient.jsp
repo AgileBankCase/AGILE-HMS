@@ -72,10 +72,7 @@
 								
 						}
 					}
-					/* else {
-							
-							alert("Please Enter Valid Patient ID");
-					} */
+					
 				         
 				  }
   			});

@@ -90,11 +90,11 @@ public class Bill extends HttpServlet {
 				record = (JSONObject) array.get(0);
 				if (record.get("no_of_days") != null) {
 					int roomCharge = 0;
-					if (record.get("type_of_bed").equals("single")) {
+					if (record.get("type_of_bed").equals("Single room")) {
 						roomCharge = 8000;
-					} else if (record.get("type_of_bed").equals("semi")) {
+					} else if (record.get("type_of_bed").equals("Semi sharing")) {
 						roomCharge = 4000;
-					} else if (record.get("type_of_bed").equals("general")) {
+					} else if (record.get("type_of_bed").equals("General Ward")) {
 						roomCharge = 2000;
 					}
 					int billForRoom = (Integer) (record.get("no_of_days")) * roomCharge;

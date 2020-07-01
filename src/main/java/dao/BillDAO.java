@@ -23,14 +23,22 @@ public class BillDAO
 		try 
 		{
 			Connection conn = DBUtil.getConnection();
-			PreparedStatement stmt = conn.prepareStatement("UPDATE public.patient_table\r\n" + 
-					"	SET \"DOD\"='now()', status=?, no_of_days=?\r\n" + 
+			PreparedStatement stmt = conn.prepareStatement("UPDATE public.patient_table \r\n" + 
+					"SET \"DOD\"='now()', status='discharged', no_of_days=?\r\n" + 
+					"WHERE \"patient_ID\"=?;\r\n" + 
+					"DELETE  FROM public.diagnostic_table\r\n" + 
+					"	WHERE \"patient_ID\"=?;\r\n" + 
+					"	DELETE  FROM public.patient_medicine_table\r\n" + 
 					"	WHERE \"patient_ID\"=?;");
-			stmt.setString(1, "discharged");
-			stmt.setInt(2, no_of_days);
+			stmt.setInt(1, no_of_days);
+			stmt.setLong(2, patient_Id);
 			stmt.setLong(3, patient_Id);
+			stmt.setLong(4, patient_Id);
+
 			
 			affectedRows = stmt.executeUpdate();
+			
+
 
 		} catch (Exception e)
 		{

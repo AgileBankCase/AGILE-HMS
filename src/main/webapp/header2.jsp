@@ -68,7 +68,7 @@ li.dropdown {
 </h1>
 <ul>
         <li><a href="/createpatient.jsp">Hello ${uname}!!!</a></li>
-        <li><a href="/searchpatient.jsp">Patient Search</a></li>
+        <!--  <li><a href="/searchpatient.jsp">Patient Search</a></li>-->
         <li><a href="/issuemedicines.jsp">Issue Medicines</a></li>
 
         <li><a onclick="confirmLogout()" >Logout</a></li>
