@@ -51,7 +51,7 @@ html {
 					<button onclick="viewPatientDetail(event)" name="learn"
 							value="myimage">
 							<img src="https://img.icons8.com/ios/13/000000/search--v1.png" />
-						</button> <input type="hidden" id="patId2"></td>
+						</button> <input type="hidden" id="patId2"><input type="hidden" id="status"></td>
 					<td><span id="name"></span></td>
 					<td><span id="age"></span></td>
 					<td><span id="address"></span></td>
@@ -69,7 +69,7 @@ html {
 			</table>
 			<br> <br>
 			<button onclick='issue()' name="issue medicine"
-				align='center'>Issue Medicine</button>
+				align='center' >Issue Medicine</button>
 	</div>
 	<div class="additional hide" id="adddiv">
 		<center>
@@ -100,9 +100,17 @@ html {
 	<script type="text/javascript">
 		function issue()
 		{
+			if($("#status").val()=="active")
+			{
 			$("#adddiv").attr("class","additional");
 			$("#medName").focus();
-			 window.scrollBy(0, 100);
+			window.scrollBy(0, 200);
+			}
+			else
+			{
+			alert("Cannot Isuue Medicine to Discharged Patient");
+			}
+			
 		}
 		function viewPatientDetail(event) {
 			event.preventDefault();
@@ -129,6 +137,7 @@ html {
 							$("#doj").html(user["DOA"]);
 							$("#bed").html(user["type_of_bed"]);
 							$("#address").html(user["address"]);
+							$("#status").val(user["status"]);
 							renderIssuedMedicine();
 						
 						} else {
@@ -202,7 +211,7 @@ html {
 		function renderIssuedMedicine(){
 			$.ajax({
 				method : "get",
-				url : "/medicine?patId="+$('#patId').val(),
+				url : "/medicine?patId="+$('#patId2').val(),
 				success : function(data)
 				{
 					
@@ -237,11 +246,15 @@ html {
 						    });
 						       $('#issuedMedicine').append(patient_data);
 								
-							$("#meddiv").attr("class","medicine");
-							resetAddMed(true);
-							$("#adddiv").attr("class","additional hide");
+							
 						}
-						
+						$("#meddiv").attr("class","medicine");
+						resetAddMed(true);
+						$("#adddiv").attr("class","additional hide");
+						/* if($("#status").val()=="active")
+						{
+						$("#buttonissuemedicine").removeAttr("disabled");
+						} */
 					}
 				}
           });
