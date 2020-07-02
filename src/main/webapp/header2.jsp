@@ -67,7 +67,10 @@ li.dropdown {
 	<strong>AGILE HOSPITAL MANAGEMENT</strong>
 </h1>
 <ul>
+
+        <li><a href="#">Hello ${uname}!!!</a></li>=======
         <li>Hello ${uname}!!!</li>
+
         <!--  <li><a href="/searchpatient.jsp">Patient Search</a></li>-->
         <li><a href="/issuemedicines.jsp">Issue Medicines</a></li>
 

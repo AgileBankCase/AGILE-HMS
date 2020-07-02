@@ -67,7 +67,8 @@ li.dropdown {
 	<strong>AGILE HOSPITAL MANAGEMENT</strong>
 </h1>
 <ul>
-        <li>Hello ${uname}!!!</li>
+        <li><a href="#">Hello ${uname}!!!</a></li>
+
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropbtn">Patient Management</a>
           <div class="dropdown-content">
