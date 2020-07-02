@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<%@ taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -78,6 +82,11 @@
     </style>
 </head>
 <body>
+	<div>
+         <c:if test="${msg != ''}">
+         <p>
+         ${msg}</p>
+         </c:if></div> 
 	<div class="header">
 		<h1 align='center'>
 			<strong>AGILE HOSPITAL MANAGEMENT</strong>
@@ -97,7 +106,6 @@
 						<input type="password" name="password" placeholder="Password">
 					</div>
 					<div class="form-input">
-						<input type="checkbox" name=""> <label>Remember me</label>
 						<button type="submit" class="btn-submit">Login</button>
 					</div>
 				</form>
